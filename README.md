@@ -10,8 +10,7 @@ A collection of privacy-focused, client-side developer tools.
 Every tool we build follows the same principles:
 
 - **Privacy First** — All processing happens locally in your browser
-- **No Backend** — No servers, no databases, no data collection
-- **Free & Open Source** — MIT licensed, free to use and modify
+- **Open Source** — MIT licensed, free to use and modify
 - **Mobile Responsive** — Works on desktop, tablet, and smartphone
 - **Simple & Focused** — One tool, one job, done well
 
