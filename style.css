@@ -1,0 +1,501 @@
+/* ============================================
+   CSV VALIDATOR — UNIFIED STYLESHEET
+   Consistent across Home, How It Works, FAQ
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --charcoal: #1e2a2e;
+  --warm-accent: #c85c2c;
+  --paper: #fefaf5;
+  --paper-light: #fffbf7;
+  --gray-mid: #5b6e6e;
+  --gray-light: #e4e0d8;
+  --border-light: #e8e2d9;
+}
+
+/* Base Typography — consistent across all pages */
+body {
+  background: var(--paper);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+  color: var(--charcoal);
+  line-height: 1.5;
+  font-size: 16px;
+}
+
+/* Container — shared width and centering */
+.container {
+  width: 60vw;
+  min-width: 480px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header — consistent across all pages */
+.site-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 1.25rem;
+  width: 100%;
+}
+
+.logo {
+  text-decoration: none;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--charcoal);
+  line-height: 1;
+}
+
+.logo-number {
+  color: var(--warm-accent);
+}
+
+.logo-labs {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--warm-accent);
+  margin-left: 0.25rem;
+  vertical-align: super;
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav a {
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--gray-mid);
+  transition: color 0.2s;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 0.25rem;
+}
+
+.nav a.active {
+  color: var(--charcoal);
+  border-bottom-color: var(--warm-accent);
+}
+
+.nav a:hover {
+  color: var(--warm-accent);
+}
+
+/* Card — consistent container for content */
+.card {
+  background: var(--paper-light);
+  border-radius: 1.5rem;
+  border: 1px solid var(--border-light);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+/* Headings — uniform sizing */
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.lead {
+  font-size: 1rem;
+  color: var(--gray-mid);
+  margin-bottom: 2rem;
+  border-left: 3px solid var(--warm-accent);
+  padding-left: 1rem;
+}
+
+h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 1.5rem 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+h2 .step-badge {
+  background: var(--warm-accent);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 2rem;
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+}
+
+/* How It Works / FAQ shared elements */
+.tour-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.tour-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 1rem;
+}
+
+.tour-icon {
+  background: var(--gray-light);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--charcoal);
+  flex-shrink: 0;
+  font-size: 0.9rem;
+}
+
+.tour-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.tour-content p {
+  color: var(--gray-mid);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.tour-content code {
+  background: var(--gray-light);
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.3rem;
+  font-size: 0.85rem;
+  font-family: monospace;
+}
+
+.rule-detail {
+  margin: 0.5rem 0 0 1rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid var(--border-light);
+  font-size: 0.85rem;
+  color: var(--gray-mid);
+}
+
+.info-note {
+  background: #f1f0e8;
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  border-left: 3px solid var(--warm-accent);
+  color: var(--gray-mid);
+}
+
+/* FAQ specific */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 1.25rem;
+}
+
+.faq-question {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--charcoal);
+  margin-bottom: 0.5rem;
+}
+
+.faq-answer {
+  color: var(--gray-mid);
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.faq-answer code {
+  background: var(--gray-light);
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.3rem;
+  font-size: 0.85rem;
+  font-family: monospace;
+}
+
+.faq-answer a {
+  color: var(--warm-accent);
+  text-decoration: none;
+}
+
+.faq-answer a:hover {
+  text-decoration: underline;
+}
+
+/* Footer — consistent */
+footer {
+  text-align: center;
+  border-top: 1px solid var(--border-light);
+  padding-top: 2rem;
+  color: var(--gray-mid);
+  font-size: 0.85rem;
+  width: 100%;
+}
+
+/* ============================================
+   HOME PAGE SPECIFIC STYLES (Forms, Inputs, Validation)
+   ============================================ */
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--charcoal);
+  font-size: 0.9rem;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-light);
+  border-radius: 0.9rem;
+  background: white;
+  transition: 0.2s;
+  margin-bottom: 1rem;
+  font-family: 'Inter', monospace;
+  font-size: 0.9rem;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--warm-accent);
+  box-shadow: 0 0 0 2px rgba(200, 92, 44, 0.1);
+}
+
+button {
+  background: var(--charcoal);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 2rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background: var(--warm-accent);
+  transform: translateY(-1px);
+}
+
+.results {
+  margin-top: 2rem;
+}
+
+.summary-success, .summary-error, .error-details {
+  padding: 1rem;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.summary-success {
+  background: #eef6ec;
+  border-left: 4px solid #2c6e2c;
+}
+
+.summary-error {
+  background: #fef1ee;
+  border-left: 4px solid var(--warm-accent);
+}
+
+.error-details {
+  background: #fff8e7;
+  border: 1px solid #f0e0b0;
+}
+
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--charcoal);
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border-radius: 3rem;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  font-size: 0.85rem;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+.rules-block {
+  border: 1px solid var(--border-light);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: left;
+}
+
+.rules-block legend {
+  font-weight: 500;
+  padding: 0 0.5rem;
+  width: auto;
+  font-size: 0.9rem;
+}
+
+.rules-block label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+  font-weight: normal;
+  font-size: 0.9rem;
+}
+
+.rules-block input[type="checkbox"] {
+  width: auto;
+  margin-bottom: 0;
+}
+
+.inline-label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.inline-label span {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.inline-label input {
+  flex: 1;
+  margin-bottom: 0;
+  min-width: 180px;
+}
+
+/* Example snippet (home page) */
+.example-snippet {
+  background: #faf9f7;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 32px;
+  border: 1px solid #e9ecef;
+}
+
+.example-snippet h3 {
+  font-size: 0.9rem;
+  color: #5a626e;
+  margin-bottom: 12px;
+}
+
+.example-snippet pre {
+  background: #fefcf7;
+  color: #5a626e;
+  padding: 12px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  font-family: monospace;
+  border: 1px solid #f0e6d2;
+}
+
+#custom-delimiter {
+  display: none;
+  width: auto;
+  margin-left: 12px;
+}
+
+#download-btn,
+#copy-btn {
+  display: none;
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS (Unified)
+   ============================================ */
+
+@media (max-width: 740px) {
+  .container {
+    width: 100%;
+    min-width: unset;
+    padding: 1rem;
+  }
+
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+
+  .tour-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tour-icon {
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  .inline-label {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .inline-label input {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .example-snippet {
+    margin: 20px;
+    padding: 16px;
+  }
+}

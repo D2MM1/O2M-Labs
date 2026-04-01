@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>FAQ · CSV Validator</title>
+  <style>
+ @import url('style.css');
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="site-header">
+    <a href="index.html" class="logo">
+      O<span class="logo-number">2</span>M<span class="logo-labs">LABS</span>
+    </a>
+    <div class="nav">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html">How it works</a>
+      <a href="faq.html" class="active">FAQ</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h1>Frequently Asked Questions</h1>
+    <div class="lead">Everything you need to know about the CSV Validator — how it works, privacy, and troubleshooting.</div>
+
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-question">What is a CSV Validator?</div>
+        <div class="faq-answer">
+          A CSV Validator is a tool that checks whether a CSV (Comma‑Separated Values) file follows a consistent structure. It verifies that every row has the same number of columns, respects your chosen delimiter (comma, semicolon, tab, etc.), and can apply optional rules like column‑specific regex or minimum length. If errors are found, it highlights problem rows and can generate a corrected version with an error column explaining the issues.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">How do I use the CSV Validator?</div>
+        <div class="faq-answer">
+          Three simple steps: <strong>1. Load your CSV</strong> — upload a file or paste the content directly. <strong>2. Choose your delimiter</strong> — select comma, semicolon, tab, auto‑detect, or enter a custom character. <strong>3. Click Validate</strong> — the tool checks column consistency and any optional rules you enabled. If valid, you'll see a success message; if invalid, you'll get a detailed error report and a button to fix the CSV.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">What file formats are supported?</div>
+        <div class="faq-answer">
+          The tool is designed for CSV (Comma‑Separated Values) files, but it works with any text file that uses a consistent delimiter. Supported delimiters include comma (<code>,</code>), semicolon (<code>;</code>), tab (<code>\t</code>), pipe (<code>|</code>), or any custom single character you specify. The file must be plain text (UTF‑8 encoding recommended).
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Can I use custom delimiters?</div>
+        <div class="faq-answer">
+          Yes. In the <strong>Input delimiter</strong> dropdown, select <strong>Custom</strong> and enter your delimiter character (for example, <code>|</code> or <code>^</code>). The validator will use that character to split columns. You can also use the <strong>Auto detect</strong> option, which guesses the delimiter based on the first row of your data.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">What happens if my CSV has inconsistent columns?</div>
+        <div class="faq-answer">
+          If a row has a different number of columns than the header row, the validator marks the CSV as invalid. The error details section lists each problem row by number, showing the expected column count and the actual count. You can then click <strong>Fix CSV</strong> to download a corrected version with an <strong>Error</strong> column that explains the mismatch for each affected row.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">How does the validator handle quoted fields or commas inside values?</div>
+        <div class="faq-answer">
+          The tool uses the <strong>Papa Parse</strong> library, which fully supports quoted fields. Values like <code>"Smith, John"</code> are treated as a single column, even though they contain a comma. Escaped quotes (<code>""</code>) inside fields are also handled correctly. This ensures that your data is parsed accurately without misinterpreting delimiters.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">What should I do if the validator says my CSV is invalid?</div>
+        <div class="faq-answer">
+          First, review the error details — they show exactly which rows have problems. Common issues include extra or missing columns, misaligned quotes, or rule failures (e.g., regex mismatch). If the problem is delimiter‑related, the tool will suggest an alternative delimiter. For structural issues, click the <strong>Fix CSV</strong> button to download a corrected file with an error column. You can then open that file in a spreadsheet to see the specific error per row.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Does the validator automatically detect the delimiter?</div>
+        <div class="faq-answer">
+          Yes, if you select <strong>Auto detect</strong> from the input delimiter dropdown. The tool examines the first row and counts columns using common delimiters (comma, semicolon, tab, pipe) to choose the most likely separator. Auto‑detection is also triggered during validation if a delimiter mismatch is suspected, and the tool will offer to switch to the detected delimiter.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Is my data processed securely?</div>
+        <div class="faq-answer">
+          Absolutely. All processing happens entirely in your browser — no data is uploaded to any server. When you upload a file or paste CSV content, it stays on your device. The tool does not use cookies, trackers, or external storage. Your data never leaves your computer or phone. You can even disconnect from the internet after the page loads; the validator continues to work offline.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Can I use the validator on mobile devices?</div>
+        <div class="faq-answer">
+          Yes. The interface is fully responsive and works on smartphones and tablets. File upload is supported (though on iOS you may need to select a file from Files or Photos). Pasting CSV data works on all mobile browsers. The layout adapts to smaller screens, and buttons are sized for touch interaction. Performance is suitable for files up to a few thousand rows on mobile devices.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">How can I download or copy the fixed CSV?</div>
+        <div class="faq-answer">
+          After fixing an invalid CSV, the tool displays a preview of the corrected file and provides two buttons: <strong>Download fixed CSV</strong> saves the file to your device; <strong>Copy to Clipboard</strong> lets you paste it directly into another application. For valid CSVs, no download button appears because the original file is unchanged.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">What are common reasons for validation failure?</div>
+        <div class="faq-answer">
+          Typical reasons include: <br>
+          - <strong>Inconsistent columns:</strong> a row has more or fewer fields than the header.<br>
+          - <strong>Wrong delimiter:</strong> the file uses semicolons but you selected comma.<br>
+          - <strong>Unescaped quotes:</strong> a field contains a quote without proper escaping (e.g., <code>"She said "hello"</code>).<br>
+          - <strong>Optional rule failures:</strong> regex pattern doesn't match, or a column is shorter than the minimum length.<br>
+          - <strong>Empty file or malformed first row.</strong> The validator will display specific error messages to help you identify the exact issue.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">What should I do if the validator doesn't work in my browser?</div>
+        <div class="faq-answer">
+          First, make sure you are using a modern browser: the latest versions of Chrome, Firefox, Safari, or Edge. If the page loads but validation fails, open the browser's developer console (F12 or right‑click → Inspect → Console) and check for red error messages. A common issue is a blocked CDN (Content Delivery Network) — if you see a message about Papa Parse not loading, try refreshing the page or using a different network. The tool works offline after the first load, so once it's working, you can disconnect and it will still function.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    O2M Labs — CSV Validator • open source
+  </footer>
+</div>
+
+</body>
+</html>

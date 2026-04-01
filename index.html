@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>CSV Validator · O2M Labs</title>
+  <style>
+  @import url('style.css');
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="site-header">
+    <a href="index.html" class="logo">
+      O<span class="logo-number">2</span>M<span class="logo-labs">LABS</span>
+    </a>
+    <div class="nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="how-it-works.html">How it works</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h1>CSV Validator</h1>
+    <p style="margin-bottom: 1.25rem; color: var(--gray-mid);">Check structure, delimiter consistency & quoted fields. Your data stays local — see FAQ for details.</p>
+
+    <form id="csv-form">
+      <label>Upload CSV file</label>
+      <input type="file" id="csv-file" accept=".csv,text/csv">
+      <span style="font-size: 0.9rem; color: var(--gray-mid); display: block; margin-top: -0.5rem; margin-bottom: 0.75rem;">Paste CSV here</span>
+      <textarea id="csv-textarea" rows="5" placeholder="Paste CSV here"></textarea>
+
+      <label>Input delimiter</label>
+      <select id="delimiter">
+        <option value="auto">Auto detect</option>
+        <option value="," selected>Comma (,)</option>
+        <option value=";">Semicolon (;)</option>
+        <option value="\t">Tab</option>
+        <option value="custom">Custom</option>
+      </select>
+      <input type="text" id="custom-delimiter" placeholder="Custom delimiter" style="display:none; margin-top:-0.5rem;">
+
+      <label>Output delimiter (for fixed CSV)</label>
+      <select id="output-delimiter">
+        <option value=",">Comma (,)</option>
+        <option value=";">Semicolon (;)</option>
+        <option value="\t">Tab</option>
+      </select>
+
+      <fieldset class="rules-block">
+        <legend>Optional rules</legend>
+        <label>
+          <input type="checkbox" id="require-all-cols"> All columns required
+        </label>
+        <div class="inline-label">
+          <span>Regex column 1:</span>
+          <input type="text" id="col1-regex" placeholder="e.g. ^[A-Za-z]+$">
+        </div>
+        <div class="inline-label">
+          <span>Min length column 2:</span>
+          <input type="number" id="col2-minlen" placeholder="e.g. 3">
+        </div>
+      </fieldset>
+
+      <button type="submit" style="width: 100%;">Validate CSV</button>
+    </form>
+
+    <div id="results" class="results"></div>
+  </div>
+  <footer>
+    O2M Labs — CSV Validator • open source
+  </footer>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script>
+  const form = document.getElementById('csv-form');
+  const fileInput = document.getElementById('csv-file');
+  const delimiterSelect = document.getElementById('delimiter');
+  const customDelimiterInput = document.getElementById('custom-delimiter');
+  const outputDelimiterSelect = document.getElementById('output-delimiter');
+  const resultsDiv = document.getElementById('results');
+  const toast = document.getElementById('toast');
+  const csvTextarea = document.getElementById('csv-textarea');
+
+  function showToast(msg, isError = false) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2800);
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function detectDelimiter(text) {
+    const delimiters = [',', ';', '\t', '|'];
+    let maxCount = 0, best = ',';
+    const firstLine = text.split('\n')[0];
+    delimiters.forEach(d => {
+      const count = firstLine.split(d).length;
+      if (count > maxCount) { maxCount = count; best = d; }
+    });
+    return best;
+  }
+
+  function parseCSV(text, delimiter) {
+    return Papa.parse(text, { delimiter, quoteChar: '"', skipEmptyLines: true }).data;
+  }
+
+  function validateStructure(rows) {
+    if (!rows.length) return { valid: false, error: 'Empty CSV' };
+    const firstRowLength = rows[0].length;
+    const invalidRows = [];
+    for (let i = 1; i < rows.length; i++) {
+      if (rows[i].length !== firstRowLength) {
+        invalidRows.push({ rowNumber: i+1, expected: firstRowLength, actual: rows[i].length, preview: rows[i].slice(0,3).join(', ') });
+      }
+    }
+    if (invalidRows.length) return { valid: false, error: 'inconsistent_columns', firstRowLength, invalidRows, totalRows: rows.length };
+    return { valid: true, rows: rows.length, columns: firstRowLength };
+  }
+
+  function validateRowsWithRules(rows, rules) {
+    const errors = [];
+    const header = rows[0];
+    for (let i = 1; i < rows.length; i++) {
+      const row = rows[i];
+      let err = '';
+      if (rules.requireAllCols && row.length !== header.length) err += 'Column count mismatch. ';
+      if (rules.col1Regex) { try { if (!new RegExp(rules.col1Regex).test(row[0] || '')) err += 'Col1 regex fail. '; } catch(e) { err += 'Invalid regex. '; } }
+      if (rules.col2MinLen > 0 && (row[1] || '').length < rules.col2MinLen) err += 'Col2 too short. ';
+      errors.push(err.trim());
+    }
+    return errors;
+  }
+
+  function annotateRowsWithErrors(rows, invalidRows, customErrors) {
+    const annotated = [rows[0].concat('Error')];
+    const invalidSet = new Set(invalidRows.map(r => r.rowNumber));
+    for (let i = 1; i < rows.length; i++) {
+      const rowNum = i+1;
+      let msg = '';
+      if (invalidSet.has(rowNum)) {
+        const inv = invalidRows.find(r => r.rowNumber === rowNum);
+        msg = `Expected ${inv.expected} columns, found ${inv.actual}`;
+      }
+      if (customErrors[i-1]) msg = msg ? `${msg}; ${customErrors[i-1]}` : customErrors[i-1];
+      annotated.push(rows[i].concat(msg));
+    }
+    return annotated;
+  }
+
+  delimiterSelect.addEventListener('change', () => {
+    customDelimiterInput.style.display = delimiterSelect.value === 'custom' ? 'inline-block' : 'none';
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    let csvContent = csvTextarea.value.trim();
+    if (!csvContent && fileInput.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (ev) => handleValidation(ev.target.result);
+      reader.readAsText(fileInput.files[0]);
+      return;
+    }
+    if (!csvContent) { showToast('Provide CSV data', true); return; }
+    handleValidation(csvContent);
+  });
+
+  async function handleValidation(csvContent) {
+    let userDelim = delimiterSelect.value;
+    if (userDelim === 'auto') userDelim = detectDelimiter(csvContent);
+    else if (userDelim === 'custom') userDelim = customDelimiterInput.value || ',';
+    const rows = parseCSV(csvContent, userDelim);
+    if (!rows.length || (rows.length===1 && rows[0].length===1 && !rows[0][0])) {
+      resultsDiv.innerHTML = '<div style="background:#f1f0e8; padding:1rem; border-radius:1rem;">No valid CSV data found.</div>';
+      return;
+    }
+    const validation = validateStructure(rows);
+
+    const rules = {
+      requireAllCols: document.getElementById('require-all-cols').checked,
+      col1Regex: document.getElementById('col1-regex').value,
+      col2MinLen: parseInt(document.getElementById('col2-minlen').value) || 0
+    };
+    const customErrors = validateRowsWithRules(rows, rules);
+    const hasCustomErrors = customErrors.some(e => e);
+
+    if (validation.valid && !hasCustomErrors) {
+      resultsDiv.innerHTML = `<div class="summary-success"><strong>✓ CSV is VALID</strong><br>Rows: ${validation.rows} | Columns: ${validation.columns}<br>Delimiter: "${userDelim}"</div><details><summary>View original (unchanged)</summary><pre style="background:#f7f5ef; padding:0.8rem; border-radius:0.8rem; margin-top:0.5rem; overflow-x:auto;">${escapeHtml(csvContent)}</pre></details>`;
+      showToast('Valid CSV — no changes', false);
+    } else {
+      const invalidRows = validation.valid ? [] : validation.invalidRows;
+      let errorHtml = `<div class="summary-error"><strong>✗ CSV invalid</strong><br>${validation.valid ? 'Custom rules failed' : `First row has ${validation.firstRowLength} cols, ${validation.invalidRows?.length || 0} inconsistent rows.`}</div>`;
+      if (!validation.valid && validation.invalidRows?.length) {
+        errorHtml += `<div class="error-details"><strong>Problem rows:</strong><ul>${validation.invalidRows.slice(0,8).map(r => `<li>Row ${r.rowNumber}: expected ${r.expected}, got ${r.actual}<span style="font-size:0.85rem; display:block;">preview: ${escapeHtml(r.preview)}</span></li>`).join('')}</ul></div>`;
+      }
+      if (hasCustomErrors) {
+        errorHtml += `<div class="error-details"><strong>Custom rule failures:</strong><ul>${customErrors.map((err,i)=> err ? `<li>Row ${i+2}: ${escapeHtml(err)}</li>` : '').join('')}</ul></div>`;
+      }
+      errorHtml += `<div style="margin-top:1.2rem;"><button id="fixBtn" style="background:var(--charcoal);">✏️ Fix CSV (add Error column)</button></div>`;
+      resultsDiv.innerHTML = errorHtml;
+      document.getElementById('fixBtn')?.addEventListener('click', () => {
+        const annotated = annotateRowsWithErrors(rows, invalidRows.length ? invalidRows : [], customErrors);
+        const outDelim = outputDelimiterSelect.value || ',';
+        const fixedCsv = Papa.unparse(annotated, { delimiter: outDelim, skipEmptyLines: false });
+        resultsDiv.innerHTML = `<div class="summary-success"><strong>✓ Fixed CSV ready</strong> — Error column added.</div><details open><summary>Preview (first rows)</summary><pre style="background:#f7f5ef; padding:1rem; border-radius:0.8rem; overflow-x:auto;">${escapeHtml(fixedCsv.substring(0,1800))}${fixedCsv.length>1800 ? '\n… (truncated)' : ''}</pre></details><div style="margin-top:1rem;"><button id="dlFixedBtn">Download fixed CSV</button></div>`;
+        document.getElementById('dlFixedBtn')?.addEventListener('click', () => {
+          const blob = new Blob([fixedCsv], {type:'text/csv'});
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'fixed.csv';
+          a.click();
+          URL.revokeObjectURL(a.href);
+          showToast('Fixed CSV downloaded');
+        });
+      });
+      showToast('CSV invalid — use Fix to add error column', true);
+    }
+  }
+</script>
+</body>
+</html>

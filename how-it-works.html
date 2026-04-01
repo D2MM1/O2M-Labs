@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>How It Works · CSV Validator</title>
+  <style>
+  @import url('style.css');
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="site-header">
+    <a href="index.html" class="logo">
+      O<span class="logo-number">2</span>M<span class="logo-labs">LABS</span>
+    </a>
+    <div class="nav">
+      <a href="index.html">Home</a>
+      <a href="how-it-works.html" class="active">How it works</a>
+      <a href="faq.html">FAQ</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h1>How It Works</h1>
+    <div class="lead">A step-by-step walkthrough of the interface, validation logic, and edge cases the tool handles automatically.</div>
+
+    <!-- Interface walkthrough -->
+    <h2><span class="step-badge">Guide</span> Interface walkthrough</h2>
+    <div class="tour-grid">
+
+      <div class="tour-item">
+        <div class="tour-icon">1</div>
+        <div class="tour-content">
+          <h3>Upload CSV file</h3>
+          <p>Click the <strong>Choose File</strong> button and select a <code>.csv</code> file from your computer or smartphone. The file is read entirely in your browser — nothing is sent to a server.</p>
+        </div>
+      </div>
+
+      <div class="tour-item">
+        <div class="tour-icon">2</div>
+        <div class="tour-content">
+          <h3>Paste CSV here</h3>
+          <p>Alternatively, copy CSV data from a spreadsheet or editor and paste it directly into the text area. This works for quick tests or snippets copied from other tools.</p>
+        </div>
+      </div>
+
+      <div class="tour-item">
+        <div class="tour-icon">3</div>
+        <div class="tour-content">
+          <h3>Input delimiter</h3>
+          <p>The input delimiter is the character that separates columns in your file. Choose from comma <code>,</code>, semicolon <code>;</code>, or tab. Select <strong>Auto detect</strong> to let the tool guess based on the first row, or choose <strong>Custom</strong> to enter any character (e.g. <code>|</code>).</p>
+        </div>
+      </div>
+
+      <div class="tour-item">
+        <div class="tour-icon">4</div>
+        <div class="tour-content">
+          <h3>Output delimiter</h3>
+          <p>When the <strong>Fix CSV</strong> button is used, the corrected file is written using this delimiter. This lets you convert a malformed CSV into a clean one with your preferred separator.</p>
+        </div>
+      </div>
+
+      <div class="tour-item">
+        <div class="tour-icon">5</div>
+        <div class="tour-content">
+          <h3>Optional rules</h3>
+          <p>Extra validation checks applied on top of the basic structure check.</p>
+          <div class="rule-detail">
+            <strong>All columns required</strong> — every row must have the same number of columns as the header row.<br><br>
+            <strong>Regex column 1</strong> — apply a regular expression to the first column (e.g. <code>^[A-Za-z]+$</code> ensures only letters).<br><br>
+            <strong>Min length column 2</strong> — require the second column to be at least a certain number of characters long (e.g. <code>3</code> means "ab" fails, "abc" passes).<br><br>
+            <em>If any rule fails, the row is marked with a descriptive error in the fixed CSV.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="tour-item">
+        <div class="tour-icon">6</div>
+        <div class="tour-content">
+          <h3>Validate CSV</h3>
+          <p>Click the <strong>Validate CSV</strong> button to run all checks. Results appear immediately below the form — a green summary for valid files, or a detailed error report for invalid ones.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- How validation works -->
+    <h2><span class="step-badge">Core</span> How validation works</h2>
+    <div class="info-note">
+      <strong>Step by step:</strong>
+      <ol style="margin: 0.5rem 0 0 1.25rem; color: var(--gray-mid);">
+        <li style="margin-bottom: 0.4rem;">Your CSV is parsed using the selected <strong>input delimiter</strong>. Quoted fields like <code>"Hello, world"</code> are handled correctly — commas inside quotes are not treated as column separators.</li>
+        <li style="margin-bottom: 0.4rem;">The tool checks <strong>column consistency</strong>: the first row (header) sets the expected column count. Any row with a different number of columns is flagged.</li>
+        <li style="margin-bottom: 0.4rem;">If <strong>optional rules</strong> are enabled, each data row is checked against them. Failures are recorded per row.</li>
+        <li style="margin-bottom: 0.4rem;"><strong>If valid</strong> — a green message appears and the original CSV is shown unchanged. No modifications, no extra columns.</li>
+        <li><strong>If invalid</strong> — a list of problem rows is displayed. A <strong>Fix CSV</strong> button appears. Clicking it generates a corrected file with an extra <strong>Error</strong> column describing what went wrong on each affected row.</li>
+      </ol>
+    </div>
+
+    <!-- Edge cases -->
+    <h2><span class="step-badge">Detail</span> Edge cases handled</h2>
+    <div class="info-note">
+      <ul style="margin: 0.5rem 0 0 1.25rem; color: var(--gray-mid);">
+        <li style="margin-bottom: 0.4rem;"><strong>Delimiter mismatch:</strong> if your data uses semicolons but comma is selected, validation will fail and the tool will suggest the correct delimiter.</li>
+        <li style="margin-bottom: 0.4rem;"><strong>Quoted fields with embedded delimiters:</strong> e.g. <code>"Smith, John", 30</code> is parsed as two columns, not three.</li>
+        <li style="margin-bottom: 0.4rem;"><strong>Empty rows</strong> are automatically skipped during validation.</li>
+        <li><strong>Large files:</strong> all processing is local, so performance depends on your device. Files up to 10 MB work smoothly on most machines.</li>
+      </ul>
+    </div>
+
+    <!-- Privacy note -->
+    <div class="info-note">
+      <strong>Privacy note</strong> — Your CSV stays entirely within your browser. No data is sent to any server and all processing happens locally on your device. For more details, visit the <a href="faq.html" style="color: var(--warm-accent);">FAQ page</a>.
+    </div>
+
+  </div>
+
+  <footer>
+    O2M Labs — CSV Validator • open source
+  </footer>
+</div>
+
+</body>
+</html>
