@@ -1,7 +1,6 @@
 # O2M Labs — Developer Tools
 
 A collection of privacy-focused, client-side developer tools.
-**Live Collection:** [https://csv-validator.netlify.app/](https://csv-validator.netlify.app/)
 
 ---
 
