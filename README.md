@@ -2,7 +2,7 @@
 
 A clean, privacy-focused web tool that validates CSV files with quoted field support. Built for O2M Labs.
 
-**Live Demo:** [https://D2MM1.github.io/O2M-Labs](https:/D2MM1.github.io//O2M-Labs)
+**Live Demo:** [https://csv-validator.netlify.app/](https://csv-validator.netlify.app/)
 
 ---
 
@@ -30,10 +30,10 @@ A clean, privacy-focused web tool that validates CSV files with quoted field sup
 
 ## Pages
 
-- **Home** — main validator interface
-- **How It Works** — guided tour of features
-- **FAQ** — common questions and answers
-- **Privacy** — data handling policy
+- [Home](https://csv-validator.netlify.app/) — main validator interface
+- [How It Works](https://csv-validator.netlify.app/how-it-works) — guided tour of features
+- [FAQ](https://csv-validator.netlify.app/faq) — common questions and answers
+- [Privacy](https://csv-validator.netlify.app/privacy) — data handling policy
 
 ---
 
@@ -42,7 +42,7 @@ A clean, privacy-focused web tool that validates CSV files with quoted field sup
 - **HTML5 / CSS3** — semantic markup, responsive design
 - **JavaScript (ES6)** — client-side validation logic
 - **Papa Parse** — robust CSV parsing with quoted field support
-- **Netlify / GitHub Pages** — static hosting
+- **Netlify** — static hosting
 
 ---
 
@@ -50,4 +50,4 @@ A clean, privacy-focused web tool that validates CSV files with quoted field sup
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/csv-validator.git
+   git clone https://github.com/D2MM1/O2M-Labs.git
