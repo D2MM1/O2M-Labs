@@ -2,7 +2,7 @@
 
 A clean, privacy-focused web tool that validates CSV files with quoted field support. Built for O2M Labs.
 
-**Live Demo:** [https://D2MM1.github.io/O2M-Labs/](https:/D2MM1.github.io//O2M-Labs/)
+**Live Demo:** [https://D2MM1.github.io/O2M-Labs](https:/D2MM1.github.io//O2M-Labs)
 
 ---
 
