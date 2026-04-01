@@ -1,1 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Workflow Architect • Semi‑Formal Reasoning + Checkpoint</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Mono:wght@400;700&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+  <style>
+  *{display:none}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
+    :root {
+      --ink: #1a1a1a;
+      --paper: #fefcf7;
+      --paper2: #f5f2ea;
+      --rule: #cbc3b5;
+      --accent: #c8411a;
+      --blue: #1f5fcf;
+      --green: #1f7840;
+      --muted: #4b4b4b;
+      --faint: #9e9a93;
+      --card-hover: #e8e2d8;
+    }
+
+    body {
+      background: #eae7df;
+      color: var(--ink);
+      font-family: 'Space Mono', monospace;
+      font-size: 16px;
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--paper);
+      border-radius: 32px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+      padding: 36px 28px 56px;
+    }
+
+    header {
+      margin-bottom: 32px;
+      border-bottom: 2px solid var(--rule);
+      padding-bottom: 24px;
+    }
+
+    .kicker {
+      font-size: 13px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(38px, 8vw, 64px);
+      font-weight: 300;
+      line-height: 0.96;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      color: #111;
+    }
+
+    h1 strong { font-weight: 700; display: block; }
+    h1 em { font-style: italic; color: var(--accent); }
+
+    .tagline {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 600px;
+    }
+
+    .field-label {
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #2c2c2c;
+      margin-bottom: 12px;
+    }
+
+    .block {
+      margin-bottom: 32px;
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .mode-card, .exp-card {
+      border: 2px solid var(--rule);
+      background: white;
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: all 0.18s;
+      border-radius: 18px;
+    }
+
+    .mode-card:hover, .exp-card:hover {
+      border-color: var(--ink);
+      background: var(--card-hover);
+    }
+
+    .mode-card.active, .exp-card.active {
+      border-color: var(--ink);
+      background: var(--ink);
+    }
+
+    .mode-card.active .mode-name,
+    .mode-card.active .mode-tag,
+    .mode-card.active .mode-desc,
+    .exp-card.active .exp-name,
+    .exp-card.active .exp-desc {
+      color: #fef7e8;
+    }
+
+    .mode-tag {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .mode-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .mode-desc, .exp-desc {
+      font-size: 13px;
+      color: #4a4a4a;
+      line-height: 1.45;
+    }
+
+    .exp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .exp-card {
+      text-align: center;
+      padding: 14px 12px;
+    }
+
+    .exp-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    textarea, input[type="text"] {
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid var(--rule);
+      border-bottom: 3px solid #a0988b;
+      padding: 14px 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 15px;
+      color: var(--ink);
+      outline: none;
+      line-height: 1.55;
+      transition: all 0.2s;
+      resize: vertical;
+      border-radius: 16px;
+    }
+
+    textarea:focus, input:focus {
+      border-color: var(--accent);
+      border-bottom-color: var(--accent);
+      box-shadow: 0 2px 6px rgba(200, 65, 26, 0.1);
+    }
+
+    textarea { min-height: 110px; }
+
+    .divider {
+      height: 2px;
+      background: var(--rule);
+      margin: 28px 0;
+      position: relative;
+    }
+
+    .divider::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--paper);
+      padding-right: 16px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--faint);
+    }
+
+    .action-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin: 24px 0 32px;
+      flex-wrap: wrap;
+    }
+
+    .gen-btn {
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      padding: 14px 32px;
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 40px;
+      transition: all 0.2s;
+    }
+
+    .gen-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .action-note {
+      font-size: 14px;
+      color: var(--muted);
+      background: var(--paper2);
+      padding: 8px 18px;
+      border-radius: 40px;
+    }
+
+    .out-zone { display: none; margin-top: 16px; }
+    .out-zone.show { display: block; }
+
+    .out-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .out-label {
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #2c2c2c;
+    }
+
+    .copy-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 9px 22px;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 40px;
+      cursor: pointer;
+    }
+
+    .copy-btn.ok { background: var(--green); }
+
+    .out-box {
+      background: #1e1e1c;
+      color: #f0ede5;
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      line-height: 1.75;
+      padding: 28px;
+      white-space: pre-wrap;
+      border-left: 6px solid var(--accent);
+      max-height: 620px;
+      overflow-y: auto;
+      border-radius: 20px;
+    }
+
+    .how-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      margin-top: 28px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .how-cell {
+      background: var(--paper2);
+      padding: 18px 14px;
+    }
+
+    .how-n {
+      font-family: 'Fraunces', serif;
+      font-size: 32px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1;
+      margin-bottom: 8px;
+      color: var(--accent);
+    }
+
+    .how-t {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .how-d {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 12px; }
+      .wrap { padding: 20px 18px 40px; }
+      .action-row { flex-direction: column; align-items: stretch; gap: 12px; }
+      .gen-btn { width: 100%; text-align: center; }
+      .action-note { text-align: center; order: 2; width: 100%; font-size: 13px; }
+      .mode-grid, .exp-grid { grid-template-columns: 1fr; }
+      .how-row { grid-template-columns: 1fr; }
+    }
+
+    code, pre { font-size: 13px; }
+    ::selection { background: var(--accent); color: white; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">▸ Workflow Architect • Semi‑Formal Reasoning</div>
+    <h1><strong>Prompt</strong><em>Block</em><strong>Builder</strong></h1>
+    <p class="tagline">Generates prompts with <b>reasoning certificates, trace paths, evidence logs & optional checkpoints</b> — inspired by Meta’s semi‑formal prompting for reliable, execution‑free reasoning.</p>
+  </header>
+
+  <div class="block">
+    <div class="field-label">Mode</div>
+    <div class="mode-grid">
+      <div class="mode-card active" id="modeExplorer" onclick="setMode('explorer')">
+        <span class="mode-tag">Mode 1</span>
+        <div class="mode-name">Explorer</div>
+        <div class="mode-desc">Expands ideas, suggests branches, allows scope to evolve.</div>
+      </div>
+      <div class="mode-card" id="modePrecision" onclick="setMode('precision')">
+        <span class="mode-tag">Mode 2</span>
+        <div class="mode-name">Precision</div>
+        <div class="mode-desc">Strict lock‑in, deterministic branching, minimal exploration.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="field-label">Your expertise level</div>
+    <div class="exp-grid">
+      <div class="exp-card" id="expBeginner" onclick="setExp('beginner')"><div class="exp-name">Beginner</div><div class="exp-desc">Plain language, step‑by‑step handholding.</div></div>
+      <div class="exp-card active" id="expIntermediate" onclick="setExp('intermediate')"><div class="exp-name">Intermediate</div><div class="exp-desc">Standard terminology, context for uncommon tools.</div></div>
+      <div class="exp-card" id="expAdvanced" onclick="setExp('advanced')"><div class="exp-name">Advanced</div><div class="exp-desc">Precise, deep config, edge cases.</div></div>
+    </div>
+  </div>
+
+  <div class="divider" data-label="your idea"></div>
+
+  <div class="block">
+    <div class="field-label">Project idea</div>
+    <textarea id="idea" placeholder="Describe what you want to build or create. Rough ideas are fine — semi‑formal reasoning will extract premises, evidence and branches.
+e.g. &quot;Build a CSV validator web app that handles quoted fields, works on mobile+desktop, free tools only.&quot;"></textarea>
+  </div>
+
+  <div class="action-row">
+    <button class="gen-btn" id="genBtn">▸ Generate Block</button>
+    <div class="action-note">Builds prompt with reasoning certificates, trace paths, evidence‑based checkpoint log.</div>
+  </div>
+
+  <div class="out-zone" id="outZone">
+    <div class="out-header">
+      <div class="out-label">Prompt block — copy & paste into Claude</div>
+      <button class="copy-btn" id="copyBtn">⎘ Copy</button>
+    </div>
+    <div class="out-box" id="outBox"></div>
+    <div class="how-row">
+      <div class="how-cell"><div class="how-n">1</div><div class="how-t">Paste into Claude</div><div class="how-d">New chat, paste this block</div></div>
+      <div class="how-cell"><div class="how-n">2</div><div class="how-t">Answer + evidence</div><div class="how-d">Clarify → Reasoning cert → Workflow</div></div>
+      <div class="how-cell"><div class="how-n">3</div><div class="how-t">Checkpoints (opt)</div><div class="how-d">CSV with premises, evidence, decisions</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentMode = 'explorer';
+  let currentExp  = 'intermediate';
+
+  function setMode(m) {
+    currentMode = m;
+    document.getElementById('modeExplorer').classList.toggle('active', m === 'explorer');
+    document.getElementById('modePrecision').classList.toggle('active', m === 'precision');
+  }
+
+  function setExp(e) {
+    currentExp = e;
+    ['Beginner','Intermediate','Advanced'].forEach(x => document.getElementById('exp'+x).classList.remove('active'));
+    document.getElementById('exp' + e.charAt(0).toUpperCase() + e.slice(1)).classList.add('active');
+  }
+
+  const expMap = {
+    beginner:     'Beginner — avoid jargon, explain every tool, provide concrete examples, step‑by‑step.',
+    intermediate: 'Intermediate — standard terminology, context for less common tools, skip basic definitions, include moderate branching.',
+    advanced:     'Advanced — precise technical language, deep config, edge cases, conditional branching details.'
+  };
+
+  const modeMap = {
+    explorer:  'Explorer — ask broad questions, suggest alternative paths, introduce conditional branches when user constraints appear.',
+    precision: 'Precision — ask only what is needed to lock scope, deterministic conditional steps, every branch must have a clear trigger.'
+  };
+
+  document.getElementById('genBtn').addEventListener('click', () => {
+    const idea = document.getElementById('idea').value.trim();
+    if (!idea) { document.getElementById('idea').focus(); return; }
+
+    const block = `# Multi-AI Workflow Architect — Semi‑Formal Reasoning Edition
+
+**Mode:** ${currentMode.charAt(0).toUpperCase() + currentMode.slice(1)} | **Expertise:** ${currentExp.charAt(0).toUpperCase() + currentExp.slice(1)}
+
+You are a Multi-AI Workflow Architect specialized in **semi‑formal reasoning** (inspired by Meta’s structured prompting), **dynamic branching**, and **evidence‑based iteration recovery**. Do not answer immediately.
+
+**Calibration:**
+${expMap[currentExp]}
+
+**Mode behavior:**
+${modeMap[currentMode]}
+
+---
+
+## Phase 1 — Clarify (with premise gathering)
+
+Read the project idea below. Ask targeted follow‑up questions to fill gaps. **Before any recommendations, explicitly gather premises:**
+
+1. Exact desired outcome  
+2. Output type  
+3. Quality level (draft / production)  
+4. **Execution environment** — mobile, desktop, or both?  
+5. Tool constraints (free only? subscriptions?)  
+6. Control preference (automated / manual)  
+7. Existing assets  
+8. Creative direction / style  
+
+Number all questions. **Do not proceed until premises are concrete.**
+
+---
+
+## Phase 2 — Documentation + Reasoning Certificate
+
+After answers, produce:
+
+- **Project Title**
+- **Objective**
+- **Final Output**
+- **Execution Environment**
+- **Tools Allowed** (device‑compatible)
+- **Key Components**
+- **Success Criteria**
+
+Then, before the workflow, deliver a **Reasoning Certificate**:
+
+\`\`\`
+## Reasoning Certificate
+
+**Premises:**
+- Execution environment: [user answer]
+- Tool constraints: [user answer]
+- Complexity indicators: [steps, branches, iteration risk]
+
+**Evidence gathered from Phase 1:**
+- [List each premise and the evidence that supports it]
+
+**Boundaries identified:**
+- [What the workflow cannot guarantee (e.g., third‑party libs without source, external APIs)]
+
+**Conclusion:**
+- Branching strategy: [primary path, fallbacks]
+- Recommended tools: [with justification based on evidence]
+\`\`\`
+
+Ask: *"Does this match your vision? Confirm before workflow."*
+
+---
+
+## Phase 3 — Workflow with trace paths & recovery
+
+**Device rule:** Tools must match the user’s environment.
+
+For each step, use this table (adds **Trace Path** to enforce evidence‑based reasoning):
+
+| Field | Content |
+|-------|---------|
+| **Step Name** | |
+| **Purpose** | |
+| **Trace Path** | Concrete functions, data flows, or files to follow (forces evidence before action) |
+| **Primary Tool (Branch A)** | |
+| **Fallback / Alternative Branch** | |
+| **Why This Tool** | (based on premises + evidence) |
+| **Exact Actions** | |
+| **Expected Output** | |
+| **Validation** | |
+| **Fix if Failed** | **Evidence‑first recovery:** ask user for error evidence, trace where path deviated, adjust only that step |
+| **Branch Condition** | |
+
+### Iteration Loop (Evidence‑Based)
+If result is unsatisfactory:
+1. Ask: *"What evidence did you gather? What deviated from the trace path?"*
+2. Identify the exact step and the missing evidence
+3. Return only to that step, update the trace path or tool
+4. Continue forward
+5. **Log the recovery** (see Phase 4)
+
+### Close with:
+- **Assembly Strategy**
+- **Confidence Assessment** — what the workflow guarantees, where it may break
+- **Boundary Handling** — what to do when hitting third‑party libraries or missing source
+- **Optimisation Tips**
+- **Upgrade Path**
+- **Feedback prompt**
+
+---
+
+## Phase 4 — Optional Checkpoint Logging (Evidence‑Aware CSV)
+
+**When to offer:** Only if workflow has 5+ steps, branches, iteration loops, or user requests tracking.
+
+If user agrees, maintain a **CHECKPOINTS.csv** with this header:
+
+\`\`\`csv
+Timestamp,Phase,Premises,Decision,Branch,Evidence gathered,Errors fixed
+\`\`\`
+
+**Rules:**
+- **Premises:** what was known at that moment (e.g., environment, constraints)
+- **Evidence gathered:** what was actually traced/verified (e.g., "traced format() call → found shadowed function")
+- **Decision:** the branch or tool chosen
+- **Errors fixed:** concrete fix based on evidence
+
+**Display checkpoints only when user asks:** "show checkpoints", "show evidence log", or "what have we logged?"
+
+**Resume:** When user returns, read the last checkpoint and continue from that phase/step.
+
+---
+
+## Tool Reference (branch‑aware)
+
+| Category | Tools | Platform |
+|----------|-------|---------|
+| Music | Suno, Udio | web/mobile & desktop |
+| Voice/SFX | ElevenLabs | web/mobile |
+| Video editing | CapCut | mobile/desktop |
+| Video editing | DaVinci Resolve | desktop only |
+| Images | Adobe Firefly, Leonardo, Canva | web/mobile |
+| Code | Replit | web/mobile |
+| Code | VS Code, GitHub | desktop |
+| UI design | Figma | web/desktop |
+| Backend | Supabase, Firebase | web |
+| Automation | Make, Zapier | web |
+| Docs | Notion, Google Docs | mobile/web |
+
+---
+
+## Project Idea
+
+${idea}
+
+*Begin with Phase 1 — ask your clarifying questions now. After each major phase, remind the user they can log a checkpoint (with premises + evidence) if they opted in.*`;
+
+    const outBox = document.getElementById('outBox');
+    outBox.textContent = block;
+    const zone = document.getElementById('outZone');
+    zone.classList.add('show');
+    setTimeout(() => zone.scrollIntoView({ behavior:'smooth', block:'start' }), 40);
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    const text = document.getElementById('outBox').textContent;
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = '✓ Copied';
+      btn.classList.add('ok');
+      setTimeout(() => { btn.textContent = '⎘ Copy'; btn.classList.remove('ok'); }, 2200);
+    });
+  });
+</script>
+</body>
+</html>
