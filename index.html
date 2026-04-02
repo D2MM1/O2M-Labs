@@ -1,1 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>O2M Labs | Cloud Tools Suite</title>
+  <meta name="description" content="O2M Labs — next‑gen search, CSV validator, workflow architect. Instant tool filtering.">
+  <meta name="theme-color" content="#0a0f1e">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #0b1120;
+      color: #eef2ff;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* Cloud animated background */
+    .cloud-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: linear-gradient(145deg, #0a0f1e 0%, #0f172a 45%, #111827 100%);
+      overflow: hidden;
+    }
+
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 1000px;
+      box-shadow: 0 0 60px rgba(120, 150, 255, 0.1);
+      backdrop-filter: blur(1px);
+      animation: floatCloud linear infinite;
+      pointer-events: none;
+    }
+
+    .cloud-1 { width: 280px; height: 140px; top: 5%; left: -10%; opacity: 0.5; animation-duration: 28s; }
+    .cloud-2 { width: 420px; height: 210px; bottom: 10%; right: -15%; opacity: 0.3; animation-duration: 38s; animation-delay: -5s; }
+    .cloud-3 { width: 180px; height: 90px; top: 25%; right: 8%; opacity: 0.45; animation-duration: 22s; animation-delay: -10s; }
+    .cloud-4 { width: 340px; height: 170px; bottom: 25%; left: 5%; opacity: 0.4; animation-duration: 32s; animation-delay: -2s; }
+    .cloud-5 { width: 220px; height: 110px; top: 60%; left: 20%; opacity: 0.35; animation-duration: 26s; animation-delay: -15s; }
+    .cloud-6 { width: 500px; height: 250px; top: -5%; right: -5%; opacity: 0.2; animation-duration: 45s; animation-delay: -7s; }
+
+    @keyframes floatCloud {
+      0% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(4%) translateY(-3%); }
+      100% { transform: translateX(0) translateY(0); }
+    }
+
+    /* main container */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* header area */
+    .hero {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(79, 128, 255, 0.25);
+      border-radius: 100px;
+      padding: 0.5rem 1.2rem;
+      margin-bottom: 1.8rem;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .logo-badge svg {
+      width: 24px;
+      height: 24px;
+      stroke: #7aa2f7;
+    }
+
+    h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #FFFFFF 0%, #A9C0FF 50%, #7AA2F7 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      color: #9ca3cf;
+      max-width: 640px;
+      margin: 0 auto;
+      border-bottom: 1px dashed rgba(100, 150, 255, 0.3);
+      display: inline-block;
+      padding-bottom: 0.25rem;
+    }
+
+    .hero-description {
+      max-width: 700px;
+      margin: 1.5rem auto 0;
+      color: #cbd5e6;
+      font-size: 1rem;
+    }
+
+    /* Standalone search bar pushed to the right */
+    .search-section {
+      display: flex;
+      justify-content: flex-end;
+      margin: 1.5rem 0 2.5rem;
+    }
+    .search-wrapper {
+      display: flex;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(16px);
+      border-radius: 80px;
+      border: 1px solid rgba(79, 128, 255, 0.45);
+      padding: 0.2rem 0.2rem 0.2rem 1.5rem;
+      transition: 0.2s;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    .search-wrapper:focus-within {
+      border-color: #7aa2f7;
+      box-shadow: 0 0 12px rgba(122, 162, 247, 0.4);
+      background: rgba(20, 30, 55, 0.9);
+    }
+    .search-icon {
+      color: #8e9bcb;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+    }
+    #searchInput {
+      background: transparent;
+      border: none;
+      padding: 0.85rem 0;
+      font-size: 0.95rem;
+      width: 100%;
+      color: white;
+      outline: none;
+      font-family: 'Inter', monospace;
+    }
+    #searchInput::placeholder {
+      color: #7e8bb6;
+      font-weight: 400;
+      letter-spacing: -0.2px;
+    }
+    .clear-search {
+      background: none;
+      border: none;
+      color: #9aa9d9;
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0 16px;
+      display: none;
+      border-radius: 40px;
+      transition: 0.2s;
+    }
+    .clear-search:hover {
+      color: white;
+    }
+
+    /* tools grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 1rem 0 2rem;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      border: 1px solid rgba(79, 128, 255, 0.25);
+      padding: 1.6rem 1.8rem 2rem;
+      transition: all 0.25s ease;
+      box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      opacity: 1;
+      transform: scale(1);
+    }
+    .card.hidden-card {
+      display: none;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(122, 162, 247, 0.6);
+      background: rgba(20, 30, 55, 0.75);
+      box-shadow: 0 20px 35px -14px rgba(0, 0, 0, 0.5);
+    }
+    .card-icon {
+      font-size: 2.8rem;
+      margin-bottom: 1.2rem;
+    }
+    .card h2 {
+      font-size: 1.65rem;
+      font-weight: 600;
+      margin-bottom: 0.65rem;
+      letter-spacing: -0.3px;
+      background: linear-gradient(120deg, #fff, #b9ceff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .card p {
+      color: #b9c3e2;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.45;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: auto;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(122, 162, 247, 0.4);
+      border-radius: 40px;
+      padding: 0.55rem 1.2rem;
+      font-weight: 500;
+      font-size: 0.85rem;
+      color: #e0e7ff;
+      text-decoration: none;
+      transition: 0.2s;
+      backdrop-filter: blur(4px);
+    }
+    .btn-primary {
+      background: #3b60e0;
+      border-color: #6a8cff;
+      color: white;
+      box-shadow: 0 2px 8px rgba(59, 96, 224, 0.3);
+    }
+    .btn-primary:hover {
+      background: #2c4ed0;
+      transform: scale(0.97);
+      border-color: #9bb6ff;
+    }
+    .btn-outline:hover {
+      background: rgba(122, 162, 247, 0.2);
+      border-color: #7aa2f7;
+      color: white;
+    }
+    .badge-new {
+      background: #22c55e20;
+      border: 1px solid #22c55e70;
+      color: #bef264;
+      font-size: 0.7rem;
+      border-radius: 30px;
+      padding: 0.2rem 0.65rem;
+      margin-left: 0.5rem;
+      font-weight: 500;
+      vertical-align: middle;
+    }
+
+    .repo-highlight {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 1.5rem;
+      padding: 1.6rem 2rem;
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      border: 1px solid rgba(100, 150, 255, 0.3);
+      backdrop-filter: blur(4px);
+    }
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.8rem;
+      color: #7e8bb6;
+      border-top: 1px solid rgba(79, 128, 255, 0.2);
+      padding-top: 2rem;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 1rem 1rem 2rem; }
+      h1 { font-size: 2.2rem; }
+      .search-section { justify-content: center; margin: 1rem 0 2rem; }
+      .search-wrapper { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="cloud-bg">
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  <div class="cloud cloud-4"></div>
+  <div class="cloud cloud-5"></div>
+  <div class="cloud cloud-6"></div>
+</div>
+
+<div class="container">
+  <div class="hero">
+    <div class="logo-badge">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m0 0a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 9m0 0v-.75a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 8.25V9" />
+      </svg>
+      <span>O2M Labs · cloud ecosystem</span>
+    </div>
+    <h1>search · validate · architect</h1>
+    <div class="tagline">next‑gen toolchain for web intelligence</div>
+    <div class="hero-description">
+      Unleash a powerful suite: universal search engine (web, images, media, social, files), CSV validator, workflow architect, and open‑source dev hub. 
+      Instantly filter tools by typing below.
+    </div>
+  </div>
+
+  <!-- Standalone search bar pushed to the right side -->
+  <div class="search-section">
+    <div class="search-wrapper">
+      <span class="search-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="7.5"/><line x1="21" y1="21" x2="15.8" y2="15.8"/></svg>
+      </span>
+      <input type="text" id="searchInput" placeholder="Search tools by name, tag or description..." autocomplete="off">
+      <button id="clearSearchBtn" class="clear-search" aria-label="Clear">✕</button>
+    </div>
+  </div>
+
+  <div class="tools-grid" id="toolsGrid">
+    <!-- CARD 1: Universal Search Hub -->
+    <div class="card" data-tool-name="Universal Search Hub" data-tool-type="search" data-tags="search web images video media social files audio map reverse">
+      <div class="card-icon">🔍🌐</div>
+      <h2>Universal Search <span class="badge-new">v2.0</span></h2>
+      <p>Web, images, videos, social media, documents, audio, maps & reverse image search. 50+ engines: Google, Bing, Yandex, academic & media sources.</p>
+      <div class="btn-group">
+        <a href="https://new-search-tool.netlify.app/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          Launch Search Hub
+        </a>
+        <a href="https://github.com/D2MM1/O2M-Labs" class="btn-outline btn" target="_blank">GitHub repo</a>
+      </div>
+      <div style="margin-top: 12px; font-size: 0.7rem; color:#7f8db0;">location‑aware & privacy options</div>
+    </div>
+
+    <!-- CARD 2: CSV Validator -->
+    <div class="card" data-tool-name="CSV Validator" data-tool-type="data" data-tags="csv validator data cleaning linting validation">
+      <div class="card-icon">📊✅</div>
+      <h2>CSV Validator</h2>
+      <p>Fast, client-side CSV linting, schema validation, duplicate detection, and data preview. Perfect for data cleaning & ETL pipelines.</p>
+      <div class="btn-group">
+        <a href="https://csv-validator.netlify.app/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          Open Validator
+        </a>
+        <a href="https://github.com/D2MM1/O2M-Labs" class="btn-outline btn" target="_blank">Contribute</a>
+      </div>
+    </div>
+
+    <!-- CARD 3: Workflow Architect -->
+    <div class="card" data-tool-name="Workflow Architect" data-tool-type="guide" data-tags="workflow automation architecture diagrams blueprint">
+      <div class="card-icon">⚙️📐</div>
+      <h2>Workflow Architect</h2>
+      <p>Design automation blueprints, system diagrams, and process logic. Read the full architectural guide — visual patterns for modern data flow.</p>
+      <div class="btn-group">
+        <a href="https://o2mlabs.blogspot.com/2026/04/workflow-architect.html" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          Read article
+        </a>
+        <a href="https://github.com/D2MM1/O2M-Labs" class="btn-outline btn" target="_blank">View source</a>
+      </div>
+    </div>
+
+    <!-- CARD 4: O2M-Labs Core -->
+    <div class="card" data-tool-name="O2M Labs Core Repository" data-tool-type="repo" data-tags="github open source monorepo code scripts">
+      <div class="card-icon">📦🛠️</div>
+      <h2>O2M‑Labs Core</h2>
+      <p>Open‑source monorepo containing search aggregator, CSV utilities, browser extensions & automation scripts. Star & fork to evolve the stack.</p>
+      <div class="btn-group">
+        <a href="https://github.com/D2MM1/O2M-Labs" class="btn btn-primary" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          GitHub Repository
+        </a>
+      </div>
+      <div style="margin-top: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
+        <span style="background:#101826; padding:0.2rem 0.7rem; border-radius:20px; font-size:0.7rem;">TypeScript</span>
+        <span style="background:#101826; padding:0.2rem 0.7rem; border-radius:20px; font-size:0.7rem;">Vanilla JS</span>
+        <span style="background:#101826; padding:0.2rem 0.7rem; border-radius:20px; font-size:0.7rem;">Open Source</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dev preview & updates row -->
+  <div class="repo-highlight">
+    <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7aa2f7" stroke-width="1.5"><path d="M12 8v4l3 3M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/></svg>
+      <span style="font-weight: 500;">active development cycle — as we develop we update</span>
+      <span>🚀 roadmap: AI summarization, advanced filters, real‑time collaboration</span>
+    </div>
+    <div>
+      <a href="https://github.com/D2MM1/O2M-Labs/issues" target="_blank" class="btn-outline btn" style="background:transparent;">Request feature →</a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>O2M Labs · open innovation · search tool, csv validator, workflow architect & core repository<br>
+    <span style="opacity:0.7;">all tools are fully client-side | privacy-first approach | 2026 iteration — updates pushed weekly</span><br>
+    🌩️ cloud‑driven ecosystem — star the repo to stay tuned</p>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const searchInput = document.getElementById('searchInput');
+    const clearBtn = document.getElementById('clearSearchBtn');
+    const cards = Array.from(document.querySelectorAll('.card'));
+
+    // filter cards based on search term (name, type, tags, inner text)
+    function filterCards() {
+      const term = searchInput.value.trim().toLowerCase();
+      cards.forEach(card => {
+        const toolName = (card.getAttribute('data-tool-name') || '').toLowerCase();
+        const toolType = (card.getAttribute('data-tool-type') || '').toLowerCase();
+        const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+        const innerText = card.innerText.toLowerCase();
+        let matches = true;
+        if (term !== '') {
+          matches = toolName.includes(term) || toolType.includes(term) || tags.includes(term) || innerText.includes(term);
+        }
+        if (matches) {
+          card.classList.remove('hidden-card');
+        } else {
+          card.classList.add('hidden-card');
+        }
+      });
+    }
+
+    function handleSearch() {
+      filterCards();
+      if (searchInput.value.length > 0) {
+        clearBtn.style.display = 'block';
+      } else {
+        clearBtn.style.display = 'none';
+      }
+    }
+
+    function clearSearch() {
+      searchInput.value = '';
+      filterCards();
+      clearBtn.style.display = 'none';
+      searchInput.focus();
+    }
+
+    // event listeners
+    searchInput.addEventListener('input', handleSearch);
+    clearBtn.addEventListener('click', clearSearch);
+    
+    // initial display
+    filterCards();
+    clearBtn.style.display = 'none';
+
+    // dynamic date footnote
+    const footerPar = document.querySelector('.footer p');
+    if(footerPar) {
+      const dateSpan = document.createElement('span');
+      dateSpan.style.display = 'block';
+      dateSpan.style.marginTop = '0.6rem';
+      dateSpan.style.fontSize = '0.7rem';
+      dateSpan.style.color = '#8f9bb5';
+      const today = new Date();
+      dateSpan.innerText = `🔄 live filter · ${today.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}`;
+      footerPar.appendChild(dateSpan);
+    }
+  })();
+</script>
+</body>
+</html>
