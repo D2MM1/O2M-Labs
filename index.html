@@ -20,6 +20,8 @@
       color: #eef2ff;
       line-height: 1.4;
       scroll-behavior: smooth;
+      /* Zoom out the whole page on PC */
+      font-size: 13px;
     }
 
     /* Cloud animated background */
@@ -57,54 +59,54 @@
       100% { transform: translateX(0) translateY(0); }
     }
 
-    /* main container - more compact */
+    /* main container */
     .container {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 1.5rem 1.5rem 3rem;
+      padding: 1rem 1.5rem 2.5rem;
       position: relative;
       z-index: 2;
     }
 
-    /* header area - much more compact */
+    /* header area */
     .hero {
       text-align: center;
-      margin-bottom: 1.2rem;
+      margin-bottom: 0.9rem;
     }
 
     .logo-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: rgba(255, 255, 255, 0.03);
       backdrop-filter: blur(8px);
       border: 1px solid rgba(79, 128, 255, 0.25);
       border-radius: 100px;
-      padding: 0.35rem 1rem;
-      margin-bottom: 1rem;
+      padding: 0.25rem 0.85rem;
+      margin-bottom: 0.75rem;
       font-weight: 500;
-      font-size: 0.8rem;
+      font-size: 0.72rem;
     }
 
     .logo-badge svg {
-      width: 18px;
-      height: 18px;
+      width: 15px;
+      height: 15px;
       stroke: #7aa2f7;
     }
 
     h1 {
-      font-size: 2.2rem;
+      font-size: 1.75rem;
       font-weight: 700;
       background: linear-gradient(135deg, #FFFFFF 0%, #A9C0FF 50%, #7AA2F7 100%);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
       letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .tagline {
-      font-size: 0.95rem;
+      font-size: 0.78rem;
       color: #9ca3cf;
       max-width: 640px;
       margin: 0 auto;
@@ -115,17 +117,17 @@
 
     .hero-description {
       max-width: 700px;
-      margin: 0.8rem auto 0;
+      margin: 0.6rem auto 0;
       color: #cbd5e6;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       line-height: 1.4;
     }
 
-    /* Standalone search bar pushed to the right - more compact */
+    /* Standalone search bar */
     .search-section {
       display: flex;
       justify-content: flex-end;
-      margin: 1rem 0 1.8rem;
+      margin: 0.75rem 0 1.4rem;
     }
     .search-wrapper {
       display: flex;
@@ -134,10 +136,10 @@
       backdrop-filter: blur(16px);
       border-radius: 60px;
       border: 1px solid rgba(79, 128, 255, 0.45);
-      padding: 0.15rem 0.15rem 0.15rem 1.2rem;
+      padding: 0.1rem 0.1rem 0.1rem 1rem;
       transition: 0.2s;
       width: 100%;
-      max-width: 320px;
+      max-width: 280px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
     .search-wrapper:focus-within {
@@ -147,19 +149,19 @@
     }
     .search-icon {
       color: #8e9bcb;
-      margin-right: 8px;
+      margin-right: 7px;
       display: flex;
       align-items: center;
     }
     .search-icon svg {
-      width: 16px;
-      height: 16px;
+      width: 13px;
+      height: 13px;
     }
     #searchInput {
       background: transparent;
       border: none;
-      padding: 0.6rem 0;
-      font-size: 0.85rem;
+      padding: 0.5rem 0;
+      font-size: 0.75rem;
       width: 100%;
       color: white;
       outline: none;
@@ -168,15 +170,15 @@
     #searchInput::placeholder {
       color: #7e8bb6;
       font-weight: 400;
-      font-size: 0.8rem;
+      font-size: 0.72rem;
     }
     .clear-search {
       background: none;
       border: none;
       color: #9aa9d9;
       cursor: pointer;
-      font-size: 1rem;
-      padding: 0 12px;
+      font-size: 0.9rem;
+      padding: 0 10px;
       display: none;
       border-radius: 40px;
       transition: 0.2s;
@@ -185,20 +187,20 @@
       color: white;
     }
 
-    /* tools grid - slightly tighter */
+    /* tools grid */
     .tools-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-      gap: 1.5rem;
-      margin: 0.5rem 0 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin: 0.4rem 0 1.2rem;
     }
 
     .card {
       background: rgba(15, 23, 42, 0.65);
       backdrop-filter: blur(12px);
-      border-radius: 1.5rem;
+      border-radius: 1.25rem;
       border: 1px solid rgba(79, 128, 255, 0.25);
-      padding: 1.2rem 1.4rem 1.5rem;
+      padding: 1rem 1.2rem 1.3rem;
       transition: all 0.2s ease;
       box-shadow: 0 8px 20px -10px rgba(0, 0, 0, 0.4);
       display: flex;
@@ -214,13 +216,13 @@
       box-shadow: 0 14px 28px -12px rgba(0, 0, 0, 0.5);
     }
     .card-icon {
-      font-size: 2.2rem;
-      margin-bottom: 0.8rem;
+      font-size: 1.8rem;
+      margin-bottom: 0.6rem;
     }
     .card h2 {
-      font-size: 1.35rem;
+      font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
       letter-spacing: -0.3px;
       background: linear-gradient(120deg, #fff, #b9ceff);
       background-clip: text;
@@ -229,26 +231,26 @@
     }
     .card p {
       color: #b9c3e2;
-      font-size: 0.8rem;
-      margin-bottom: 1.2rem;
-      line-height: 1.4;
+      font-size: 0.72rem;
+      margin-bottom: 1rem;
+      line-height: 1.45;
     }
     .btn-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
       margin-top: auto;
     }
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(122, 162, 247, 0.4);
       border-radius: 40px;
-      padding: 0.4rem 1rem;
+      padding: 0.35rem 0.85rem;
       font-weight: 500;
-      font-size: 0.75rem;
+      font-size: 0.68rem;
       color: #e0e7ff;
       text-decoration: none;
       transition: 0.2s;
@@ -274,50 +276,103 @@
       background: #22c55e20;
       border: 1px solid #22c55e70;
       color: #bef264;
-      font-size: 0.6rem;
+      font-size: 0.55rem;
       border-radius: 30px;
-      padding: 0.15rem 0.5rem;
-      margin-left: 0.4rem;
+      padding: 0.12rem 0.45rem;
+      margin-left: 0.35rem;
       font-weight: 500;
       vertical-align: middle;
     }
 
     .repo-highlight {
       background: rgba(0, 0, 0, 0.3);
-      border-radius: 1rem;
-      padding: 1rem 1.5rem;
-      margin-top: 1.5rem;
+      border-radius: 0.85rem;
+      padding: 0.85rem 1.2rem;
+      margin-top: 1.2rem;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      gap: 1rem;
+      gap: 0.75rem;
       border: 1px solid rgba(100, 150, 255, 0.3);
       backdrop-filter: blur(4px);
     }
     .repo-highlight svg {
-      width: 22px;
-      height: 22px;
+      width: 18px;
+      height: 18px;
     }
     .repo-highlight span {
-      font-size: 0.8rem;
+      font-size: 0.72rem;
     }
     .footer {
       text-align: center;
-      margin-top: 2rem;
-      font-size: 0.7rem;
+      margin-top: 1.5rem;
+      font-size: 0.65rem;
       color: #7e8bb6;
       border-top: 1px solid rgba(79, 128, 255, 0.2);
-      padding-top: 1.5rem;
+      padding-top: 1.2rem;
     }
+
+    /* ===== MOBILE OVERRIDES ===== */
     @media (max-width: 700px) {
-      .container { padding: 1rem 1rem 2rem; }
-      h1 { font-size: 1.8rem; }
-      .search-section { justify-content: center; margin: 0.8rem 0 1.5rem; }
-      .search-wrapper { max-width: 100%; }
-      .hero-description { font-size: 0.8rem; }
-      .card h2 { font-size: 1.2rem; }
-      .repo-highlight { flex-direction: column; align-items: flex-start; }
+      body {
+        font-size: 16px; /* restore base for mobile */
+      }
+
+      .container {
+        padding: 1rem 1rem 2rem;
+      }
+
+      h1 {
+        font-size: 1.8rem; /* keep mobile h1 reasonable */
+      }
+
+      .tagline {
+        font-size: 0.9rem; /* +5px equiv from original 0.78rem on PC */
+      }
+
+      .hero-description {
+        font-size: 0.9rem; /* bumped up for mobile readability */
+      }
+
+      .search-section {
+        justify-content: center;
+        margin: 0.8rem 0 1.5rem;
+      }
+
+      .search-wrapper {
+        max-width: 100%;
+      }
+
+      #searchInput {
+        font-size: 0.95rem; /* larger on mobile */
+      }
+
+      .card h2 {
+        font-size: 1.25rem; /* bigger on mobile */
+      }
+
+      .card p {
+        font-size: 0.9rem; /* +5px from PC's 0.72rem → ~0.9rem on mobile */
+      }
+
+      .btn {
+        font-size: 0.85rem; /* +5px from PC's 0.68rem → ~0.85rem on mobile */
+        padding: 0.5rem 1.1rem;
+      }
+
+      .repo-highlight {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .repo-highlight span {
+        font-size: 0.88rem; /* bumped up on mobile */
+      }
+
+      .card-icon {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
@@ -365,7 +420,7 @@
       <p>50+ engines: Google, Bing, Yandex. Web, images, videos, social, docs, audio, maps & reverse image search.</p>
       <div class="btn-group">
         <a href="https://new-search-tool.netlify.app/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
           Launch
         </a>
         <a href="https://github.com/D2MM1/O2M-Labs" class="btn-outline btn" target="_blank">GitHub</a>
@@ -379,7 +434,7 @@
       <p>Client-side CSV linting, schema validation, duplicate detection, and data preview for ETL pipelines.</p>
       <div class="btn-group">
         <a href="https://csv-validator.netlify.app/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
           Open
         </a>
         <a href="https://github.com/D2MM1/O2M-Labs" class="btn-outline btn" target="_blank">Contribute</a>
@@ -393,7 +448,7 @@
       <p>Design automation blueprints, system diagrams, and process logic. Visual patterns for modern data flow.</p>
       <div class="btn-group">
         <a href="https://o2mlabs.blogspot.com/2026/04/workflow-architect.html" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
           Read
         </a>
         <a href="https://github.com/D2MM1/O2M-Labs" class="btn-outline btn" target="_blank">Source</a>
@@ -407,27 +462,27 @@
       <p>Monorepo: search aggregator, CSV utilities, browser extensions & automation scripts. Star & fork.</p>
       <div class="btn-group">
         <a href="https://github.com/D2MM1/O2M-Labs" class="btn btn-primary" target="_blank">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
           GitHub
         </a>
       </div>
-      <div style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;">
-        <span style="background:#101826; padding:0.15rem 0.6rem; border-radius:20px; font-size:0.65rem;">TypeScript</span>
-        <span style="background:#101826; padding:0.15rem 0.6rem; border-radius:20px; font-size:0.65rem;">Vanilla JS</span>
-        <span style="background:#101826; padding:0.15rem 0.6rem; border-radius:20px; font-size:0.65rem;">Open Source</span>
+      <div style="margin-top: 8px; display: flex; gap: 5px; flex-wrap: wrap;">
+        <span style="background:#101826; padding:0.12rem 0.5rem; border-radius:20px; font-size:0.6rem;">TypeScript</span>
+        <span style="background:#101826; padding:0.12rem 0.5rem; border-radius:20px; font-size:0.6rem;">Vanilla JS</span>
+        <span style="background:#101826; padding:0.12rem 0.5rem; border-radius:20px; font-size:0.6rem;">Open Source</span>
       </div>
     </div>
   </div>
 
   <!-- Dev preview & updates row -->
   <div class="repo-highlight">
-    <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
       <svg viewBox="0 0 24 24" fill="none" stroke="#7aa2f7" stroke-width="1.5"><path d="M12 8v4l3 3M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/></svg>
-      <span style="font-weight: 500; font-size: 0.85rem;">active development — as we develop we update</span>
-      <span style="font-size: 0.8rem;">🚀 AI summarization · advanced filters · real‑time collaboration</span>
+      <span style="font-weight: 500; font-size: 0.78rem;">active development — as we develop we update</span>
+      <span style="font-size: 0.72rem;">🚀 AI summarization · advanced filters · real‑time collaboration</span>
     </div>
     <div>
-      <a href="https://github.com/D2MM1/O2M-Labs/issues" target="_blank" class="btn-outline btn" style="background:transparent; font-size:0.75rem;">Request feature →</a>
+      <a href="https://github.com/D2MM1/O2M-Labs/issues" target="_blank" class="btn-outline btn" style="background:transparent; font-size:0.68rem;">Request feature →</a>
     </div>
   </div>
 
@@ -487,7 +542,7 @@
       const dateSpan = document.createElement('span');
       dateSpan.style.display = 'block';
       dateSpan.style.marginTop = '0.4rem';
-      dateSpan.style.fontSize = '0.65rem';
+      dateSpan.style.fontSize = '0.6rem';
       dateSpan.style.color = '#8f9bb5';
       const today = new Date();
       dateSpan.innerText = `🔄 live filter · ${today.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}`;
